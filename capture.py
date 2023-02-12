@@ -17,7 +17,7 @@ class Recorder:
         GPIO.setup(self.ledpin, GPIO.OUT)
         GPIO.setup(self.buttonpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(self.buttonpin, GPIO.FALLING, 
-            callback = self.change_state, bouncetime = 100)
+            callback = self.change_state, bouncetime = 1000)
     
         # indicate successful initialisation
         self.blink(3)
@@ -28,7 +28,7 @@ class Recorder:
             
 
 
-    def change_state(self):
+    def change_state(self, channel):
         # change the recording state
         self.state = 1 - self.state
         if self.state == 1:
@@ -56,6 +56,7 @@ if __name__ == "__main__":
     try:
         recorder = Recorder()
         while True:
-            pass
+            print(recorder.state)
+            time.sleep(0.2)
     except:
         GPIO.cleanup()
