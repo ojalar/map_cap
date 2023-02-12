@@ -1,13 +1,18 @@
 import time
 import RPi.GPIO as GPIO
+from picamera import PiCamera
+from video import VideoOutput
 
 class Recorder:
     def __init__(self):
         # pin numbers on the Raspi GPIO
         self.ledpin = 5
         self.buttonpin = 6
-        # fps to use for recording
-        self.fps = 10
+
+        # camera setup
+        self.cam = PiCamera()
+        self.cam.resolution = (1640, 1232)
+        self.cam.framerate = 20
 
         # recording state
         self.state = 0
@@ -24,7 +29,9 @@ class Recorder:
 
     def capture(self):
         # capture data
-        pass
+        self.cam.start_recording(VideoOutput(), format="h264")
+        self.cam.wait_recording(10)
+        self.cam.stop_recording()
             
 
 
@@ -55,8 +62,6 @@ class Recorder:
 if __name__ == "__main__":
     try:
         recorder = Recorder()
-        while True:
-            print(recorder.state)
-            time.sleep(0.2)
+        recorder.capture()
     except:
         GPIO.cleanup()
