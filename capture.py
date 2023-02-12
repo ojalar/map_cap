@@ -12,7 +12,7 @@ class Recorder:
         # camera setup
         self.cam = PiCamera()
         self.cam.resolution = (1640, 1232)
-        self.cam.framerate = 20
+        self.cam.framerate = 10
 
         # recording state
         self.state = 0
