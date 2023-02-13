@@ -2,6 +2,7 @@ import time
 import RPi.GPIO as GPIO
 from picamera import PiCamera
 from video import VideoOutput
+from imu import IMU
 
 class Recorder:
     def __init__(self):
@@ -13,6 +14,9 @@ class Recorder:
         self.cam = PiCamera()
         self.cam.resolution = (1640, 1232)
         self.cam.framerate = 10
+
+        # imu setup
+        self.imu = IMU()
 
         # recording state
         self.state = 0
@@ -29,9 +33,16 @@ class Recorder:
 
     def capture(self):
         # capture data
-        self.cam.start_recording(VideoOutput(), format="h264")
-        self.cam.wait_recording(10)
-        self.cam.stop_recording()
+        while True:
+            if self.state == 1:
+                timestamp = str(int(time.time()))
+                self.cam.start_recording(VideoOutput(timestamp), format="h264")
+                self.imu.start_recording(timestamp)
+                while self.state == 1:
+                    self.imu.log()
+                    
+                self.cam.stop_recording()
+                self.imu.stop_recording()
             
 
 
