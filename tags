@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+IMU	imu.py	/^class IMU:$/;"	c
+Recorder	capture.py	/^class Recorder:$/;"	c
+VideoOutput	video.py	/^class VideoOutput:$/;"	c
+__init__	capture.py	/^    def __init__(self):$/;"	m	class:Recorder
+__init__	imu.py	/^    def __init__(self, calib_path = None):$/;"	m	class:IMU
+__init__	video.py	/^    def  __init__(self, filename):$/;"	m	class:VideoOutput
+blink	capture.py	/^    def blink(self, n):$/;"	m	class:Recorder
+calibrate	imu.py	/^    def calibrate(self):$/;"	m	class:IMU
+capture	capture.py	/^    def capture(self):$/;"	m	class:Recorder
+change_state	capture.py	/^    def change_state(self, channel):$/;"	m	class:Recorder
+flush	video.py	/^    def flush(self):$/;"	m	class:VideoOutput
+log	imu.py	/^    def log(self):$/;"	m	class:IMU
+start_recording	imu.py	/^    def start_recording(filename):$/;"	m	class:IMU
+stop_recording	imu.py	/^    def stop_recording():$/;"	m	class:IMU
+write	video.py	/^    def write(self, s):$/;"	m	class:VideoOutput

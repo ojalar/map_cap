@@ -28,7 +28,7 @@ class IMU:
     def log(self):
         timestamp = time.time()
         data = self.imu.getAllData()
-        
+        print(data)        
     def calibrate(self):
         self.imu.calibrate()
         self.imu.configure()
