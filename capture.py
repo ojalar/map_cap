@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 from picamera import PiCamera
 from video import VideoOutput
 from imu import IMU
+import traceback
 
 class Recorder:
     def __init__(self):
@@ -75,4 +76,5 @@ if __name__ == "__main__":
         recorder = Recorder()
         recorder.capture()
     except:
+        print(traceback.format_exc())
         GPIO.cleanup()

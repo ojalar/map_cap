@@ -1,6 +1,5 @@
 from mpu9250_jmdev.registers import *
 from mpu9250_jmdev.mpu_9250 import MPU9250
-import smbus
 import time
 
 class IMU:
@@ -28,13 +27,15 @@ class IMU:
     def log(self):
         timestamp = time.time()
         data = self.imu.getAllData()
-        print(data)        
+        data = [str(x) for x in data]
+        self.f.write(','.join(data) + '\n')
+
     def calibrate(self):
         self.imu.calibrate()
         self.imu.configure()
     
-    def start_recording(filename):
-        self.f = open(filename, 'w')
-
-    def stop_recording():
+    def start_recording(self, filename):
+        self.f = open("data/imu_" + filename + ".csv", 'w')
+        
+    def stop_recording(self):
         self.f.close()

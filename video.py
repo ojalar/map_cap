@@ -2,8 +2,8 @@ import time
 
 class VideoOutput:
     def  __init__(self, filename):
-        self.video = open(filename + ".h264", "wb")
-        self.timestamps = open(current_time + ".csv", 'w')
+        self.video = open("data/cam_" + filename + ".h264", "wb")
+        self.timestamps = open("data/cam_" + filename + ".csv", 'w')
 
     def write(self, s):
         timestamp = time.time()
