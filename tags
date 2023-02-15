@@ -15,7 +15,9 @@ calibrate	imu.py	/^    def calibrate(self):$/;"	m	class:IMU
 capture	capture.py	/^    def capture(self):$/;"	m	class:Recorder
 change_state	capture.py	/^    def change_state(self, channel):$/;"	m	class:Recorder
 flush	video.py	/^    def flush(self):$/;"	m	class:VideoOutput
+generate_header	imu.py	/^    def generate_header(self):$/;"	m	class:IMU
+imu	imu.py	/^    imu = IMU()$/;"	v	class:IMU
 log	imu.py	/^    def log(self):$/;"	m	class:IMU
-start_recording	imu.py	/^    def start_recording(filename):$/;"	m	class:IMU
-stop_recording	imu.py	/^    def stop_recording():$/;"	m	class:IMU
+start_recording	imu.py	/^    def start_recording(self, filename):$/;"	m	class:IMU
+stop_recording	imu.py	/^    def stop_recording(self):$/;"	m	class:IMU
 write	video.py	/^    def write(self, s):$/;"	m	class:VideoOutput
