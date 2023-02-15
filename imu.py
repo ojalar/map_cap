@@ -33,9 +33,29 @@ class IMU:
     def calibrate(self):
         self.imu.calibrate()
         self.imu.configure()
-    
+        abias = [str(x) for x in self.imu.abias] 
+        gbias = [str(x) for x in self.imu.gbias]
+        mscale = [str(x) for x in self.imu.magScale]
+        mbias = [str(x) for x in self.imu.mbias]
+        with open("calib/imu.csv", 'w') as c:
+            c.write(','.join(abias) + '\n')
+            c.write(','.join(gbias) + '\n')
+            c.write(','.join(mscale) + '\n')
+            c.write(','.join(mbias))
+
     def start_recording(self, filename):
         self.f = open("data/imu_" + filename + ".csv", 'w')
         
     def stop_recording(self):
         self.f.close()
+
+    def generate_header(self):
+        with open("data/header.csv", 'w') as h:
+            labels = self.imu.getAllDataLabels()
+            h.write(','.join(labels))
+
+
+if __name__ == "__main__":
+    imu = IMU()
+    #imu.generate_header()
+    imu.calibrate()
