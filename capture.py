@@ -17,7 +17,7 @@ class Recorder:
         self.cam.framerate = 10
 
         # imu setup
-        self.imu = IMU()
+        self.imu = IMU("calib/imu.csv")
 
         # recording state
         self.state = 0
@@ -77,4 +77,17 @@ if __name__ == "__main__":
         recorder.capture()
     except:
         print(traceback.format_exc())
-        GPIO.cleanup()
+    
+    # release GPIO cleanly
+    GPIO.cleanup()
+    
+    # just in case program is terminated during recording
+    try:
+        recorder.cam.stop_recording()
+    except:
+        pass
+    
+    try: 
+        recorder.imu.stop_recording()
+    except:
+        pass
