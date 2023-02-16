@@ -1,6 +1,7 @@
 from mpu9250_jmdev.registers import *
 from mpu9250_jmdev.mpu_9250 import MPU9250
 import time
+import numpy as np
 
 class IMU:
     def __init__(self, calib_path = None):
@@ -19,10 +20,12 @@ class IMU:
         self.f = None
 
         if calib_path != None:
-            self.imu.abias = [0, 0, 0] # Set the master accelerometer biases
-            self.gyro.abias = [0, 0, 0]
-            self.imu.magScale = [0, 0, 0]  
-            self.imu.mbias = [0, 0, 0] # Set magnetometer hard iron distortion
+            data = np.loadtxt(calib_path, delimiter = ',')
+            print(data)
+            self.imu.abias = data[0, :] 
+            self.gyro.abias = data[1, :]
+            self.imu.magScale = data[2, :]  
+            self.imu.mbias = data[3, :]
     
     def log(self):
         timestamp = time.time()
@@ -56,6 +59,5 @@ class IMU:
 
 
 if __name__ == "__main__":
-    imu = IMU()
+    imu = IMU("calib/imu.csv")
     #imu.generate_header()
-    imu.calibrate()
