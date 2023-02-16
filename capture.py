@@ -41,6 +41,7 @@ class Recorder:
                 self.imu.start_recording(timestamp)
                 while self.state == 1:
                     self.imu.log()
+                    time.sleep(0.005)
                     
                 self.cam.stop_recording()
                 self.imu.stop_recording()
