@@ -21,9 +21,8 @@ class IMU:
 
         if calib_path != None:
             data = np.loadtxt(calib_path, delimiter = ',')
-            print(data)
             self.imu.abias = data[0, :] 
-            self.gyro.abias = data[1, :]
+            self.imu.gbias = data[1, :]
             self.imu.magScale = data[2, :]  
             self.imu.mbias = data[3, :]
     
@@ -60,4 +59,9 @@ class IMU:
 
 if __name__ == "__main__":
     imu = IMU("calib/imu.csv")
+    #imu.calibrate()
+    imu.start_recording("test")
+    imu.log()
+    imu.log()
+    imu.stop_recording()
     #imu.generate_header()
