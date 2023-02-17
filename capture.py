@@ -5,9 +5,10 @@ from video import VideoOutput
 from imu import IMU
 import traceback
 
+# main class for recording with the camera unit
 class Recorder:
     def __init__(self):
-        # pin numbers on the Raspi GPIO
+        # pin numbers on the Raspi GPIO for the led and button
         self.ledpin = 5
         self.buttonpin = 6
 
@@ -19,13 +20,16 @@ class Recorder:
         # imu setup
         self.imu = IMU()
 
-        # recording state
+        # recording state, changed with the button
+        # 0 for waiting
+        # 1 for recording
         self.state = 0
 
-        # GPIO setup
+        # GPIO setup for led and button
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.ledpin, GPIO.OUT)
         GPIO.setup(self.buttonpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        # add interrupt to button push for changing state
         GPIO.add_event_detect(self.buttonpin, GPIO.FALLING, 
             callback = self.change_state, bouncetime = 1000)
     
@@ -33,8 +37,9 @@ class Recorder:
         self.blink(3)
 
     def capture(self):
-        # capture data
+        # capture data from the camera and imu
         while True:
+            # only initiate recording if state is appropriate
             if self.state == 1:
                 timestamp = str(int(time.time()))
                 self.cam.start_recording(VideoOutput(timestamp), format="h264")
@@ -48,8 +53,9 @@ class Recorder:
 
 
     def change_state(self, channel):
-        # change the recording state
+        # change the recording state, initiated by button interrupt
         self.state = 1 - self.state
+        # change led state accordingly, led is lit during recording
         if self.state == 1:
             GPIO.output(self.ledpin, GPIO.HIGH)
         else:
