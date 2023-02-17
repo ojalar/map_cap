@@ -41,18 +41,20 @@ class Recorder:
         while True:
             # only initiate recording if state is appropriate
             if self.state == 1:
+                # timestamp for filenames
                 timestamp = str(int(time.time()))
+                # initiate sensors for recording, open files
                 self.cam.start_recording(VideoOutput(timestamp), format="h264")
                 self.imu.start_recording(timestamp)
+                # continue recording until state is changed
                 while self.state == 1:
+                    # log imu data, short sleep to limit amount of data
                     self.imu.log()
                     time.sleep(0.005)
-                    
+                # stop recording cleanly, close files
                 self.cam.stop_recording()
                 self.imu.stop_recording()
             
-
-
     def change_state(self, channel):
         # change the recording state, initiated by button interrupt
         self.state = 1 - self.state
@@ -79,6 +81,7 @@ class Recorder:
 
 
 if __name__ == "__main__":
+    # create recorder, run capturing script until program is terminated
     try:
         recorder = Recorder()
         recorder.capture()
@@ -89,6 +92,7 @@ if __name__ == "__main__":
     GPIO.cleanup()
     
     # just in case program is terminated during recording
+    # close recordings cleanly
     try:
         recorder.cam.stop_recording()
     except:
