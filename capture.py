@@ -18,7 +18,7 @@ class Recorder:
         self.cam.framerate = 10
 
         # imu setup
-        self.imu = IMU()
+        self.imu = IMU("calib/imu.csv")
 
         # recording state, changed with the button
         # 0 for waiting
@@ -46,6 +46,7 @@ class Recorder:
                 self.imu.start_recording(timestamp)
                 while self.state == 1:
                     self.imu.log()
+                    time.sleep(0.005)
                     
                 self.cam.stop_recording()
                 self.imu.stop_recording()
@@ -83,4 +84,17 @@ if __name__ == "__main__":
         recorder.capture()
     except:
         print(traceback.format_exc())
-        GPIO.cleanup()
+    
+    # release GPIO cleanly
+    GPIO.cleanup()
+    
+    # just in case program is terminated during recording
+    try:
+        recorder.cam.stop_recording()
+    except:
+        pass
+    
+    try: 
+        recorder.imu.stop_recording()
+    except:
+        pass
