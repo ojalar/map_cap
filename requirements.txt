@@ -1,0 +1,4 @@
+numpy
+smbus2
+mpu9250-jmdev
+RPi.GPIO
