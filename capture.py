@@ -44,6 +44,7 @@ class Recorder:
                 # timestamp for filenames
                 timestamp = str(int(time.time()))
                 # initiate sensors for recording, open files
+                self.cam.framerate = 10
                 self.cam.start_recording(VideoOutput(timestamp), format="h264")
                 self.imu.start_recording(timestamp)
                 # continue recording until state is changed
