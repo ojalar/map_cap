@@ -15,7 +15,7 @@ class Recorder:
         # camera setup
         self.cam = PiCamera()
         self.cam.resolution = (1640, 1232)
-        self.cam.framerate = 10
+        #self.cam.framerate = 10
 
         # imu setup
         self.imu = IMU("calib/imu.csv")
@@ -44,7 +44,7 @@ class Recorder:
                 # timestamp for filenames
                 timestamp = str(int(time.time()))
                 # initiate sensors for recording, open files
-                self.cam.framerate = 10
+                #self.cam.framerate = 10
                 self.cam.start_recording(VideoOutput(timestamp), format="h264")
                 self.imu.start_recording(timestamp)
                 # continue recording until state is changed
